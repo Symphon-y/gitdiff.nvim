@@ -26,6 +26,14 @@ function M.setup_files_panel(buf)
     if f then diff_panel.load(f) end
   end, 'gitdiff: open file diff')
 
+  map(buf, 'n', km.open_file, function()
+    local f = files_panel.file_at_cursor()
+    if not f then return end
+    local full_path = state.session.repo_root .. '/' .. f.path
+    ui.close()
+    vim.cmd('edit ' .. vim.fn.fnameescape(full_path))
+  end, 'gitdiff: open file in editor')
+
   map(buf, 'n', km.stage, function()
     local f = files_panel.file_at_cursor()
     if not f then return end
@@ -110,8 +118,9 @@ function M.show_help()
     ' gitdiff keymaps ',
     '',
     ' Files panel:',
-    '   ' .. km.files_panel.open    .. '   open diff for file',
-    '   ' .. km.files_panel.stage   .. '   stage file',
+    '   ' .. km.files_panel.open      .. '      open diff for file',
+    '   ' .. km.files_panel.open_file .. '   open file in editor',
+    '   ' .. km.files_panel.stage     .. '   stage file',
     '   ' .. km.files_panel.unstage .. '   unstage file',
     '   ' .. km.files_panel.refresh .. '   refresh',
     '   ' .. km.files_panel.close   .. '   close session',

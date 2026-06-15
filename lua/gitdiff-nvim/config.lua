@@ -6,6 +6,7 @@ local defaults = {
   keymaps = {
     files_panel = {
       open = '<CR>',
+      open_file = 'o',
       stage = 's',
       unstage = 'u',
       refresh = 'r',
